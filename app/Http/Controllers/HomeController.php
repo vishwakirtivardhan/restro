@@ -146,6 +146,14 @@ class HomeController extends Controller
     }
     public function customReport(){
         
+        $fromDate='2021-07-15';
+        $toDate='2021-07-23';
+        $orderName= order_list::distinct()->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->pluck('name')->toArray();
+        //echo '<pre>'; print_r($orderName);
+
+        foreach($orderName as $key){
+            
+        }
     }
 }
 
