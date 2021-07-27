@@ -169,12 +169,27 @@ class HomeController extends Controller
             
         }
        
-        $ordertype= orders::whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->pluck('order_type')->toArray();
+        $ordertype= orders::select('order_type','total_price')->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->get()->toArray();
+        $zomato=$online=$cash=0;
+        $zomato_cost=$online_cost=$cash_cost=0;
+        foreach($ordertype as $key=>$val){
+            if($val['order_type']=='Zomato'){
+                $zomato++; 
+                $zomato_cost +=$val['total_price'];
+            }
+            if($val['order_type']=='Cash'){
+                $cash++;
+                $cash_cost +=$val['total_price'];
+            }
+            if($val['order_type']=='Online'){
+                $online++;
+                $online_cost +=$val['total_price'];
+            } 
+        }
+        //$ordertype = array_count_values($ordertype);    
+        //$respose[2'order_types']=$ordertype;
 
-        $ordertype = array_count_values($ordertype);    
-        $respose['order_types']=$ordertype;
-
-       //echo '<pre>'; print_r($respose);
+       echo '<pre>'; print_r($ordertype);
         return view('pages/report',$respose);
     }
 }
