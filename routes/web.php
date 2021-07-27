@@ -23,7 +23,7 @@ Route::post('menu_save', 'HomeController@menu_save')->name('menu_save');
 Route::get('new_order', 'HomeController@new_order')->name('new_order');
 Route::get('popupOpenItem', 'HomeController@popupOpenItem');
 
-Route::post('save/menu', 'HomeController@save_order');
+Route::post('save_menu', 'HomeController@save_order');
 Route::get('orderStausChange', 'HomeController@orderStatus');
 
 Route::get('report', 'HomeController@customReport');

@@ -45,8 +45,8 @@ class HomeController extends Controller
     public function new_order()
     {
         $respose=[];
-        $all_order = orders::all()->toArray();
-        //echo '<pre>';print_r($all_order);die;
+        $all_order = orders::orderBy('id', 'DESC')->get()->toArray();
+        // echo '<pre>';print_r($all_order);die;
         //allorder();
         
         foreach($all_order as $key=>$val){
@@ -55,7 +55,7 @@ class HomeController extends Controller
            $all_order[$key]['order_lists']=$orderDeatils;
            
         }
-        //echo '<pre>';  print_r($all_order);die;
+        // echo '<pre>';  print_r($all_order);die;
         $respose['all_order']=$all_order;
         
         $respose['menu_lists'] = menu_list::select('name', 'price')

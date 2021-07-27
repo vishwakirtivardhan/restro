@@ -245,9 +245,9 @@ img {
                 </div>
             </div>
         </div>
-        <div class="foot">
+        <!-- <div class="foot">
             <img src="https://i.ibb.co/c8CQvBq/barcode.png" alt="barcode" class="barcode" />
-        </div>
+        </div> -->
     </div>
 </div>
 @endsection

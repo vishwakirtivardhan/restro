@@ -15,7 +15,7 @@
     Total Amount : 0
 </button>
 <br><br>
-<form id="order_form" action="save/menu" method="post">
+<form id="order_form" action="save_menu" method="post">
     {{ csrf_field() }}
     <!-- <button type="button" class="btn btn-primary " id="total_bill">
         Total Amount : 0
