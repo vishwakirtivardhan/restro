@@ -144,16 +144,38 @@ class HomeController extends Controller
             return 'Failed';
         }
     }
-    public function customReport(){
+    public function customReport(Request $res){
+        $respose=[];        
+          $fromDate=@$res->from;
+         $toDate=@$res->to;
         
-        $fromDate='2021-07-15';
-        $toDate='2021-07-23';
+        //$fromDate='2021-07-15';
+        //$toDate='2021-07-23';
+       // echo gettype($fromDate);die;
         $orderName= order_list::distinct()->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->pluck('name')->toArray();
-        //echo '<pre>'; print_r($orderName);
-
-        foreach($orderName as $key){
+        //echo '<pre>'; print_r($orderName);die;
+        //$respose['item_reports'];
+        foreach($orderName as $keyName){
+            //echo $key;die;
+            $orderNameList= order_list::select()->where('name',$keyName)->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->get()->toArray();
+          //  echo '<pre>'; print_r($orderNameList);die;
+            $qty=$tcost=0;
+            foreach($orderNameList as $key=>$value){
+                $qty += $value['quantity'];
+                $tcost += $value['total_cost'];
+            }
+            $respose['item_reports'][$keyName]['quantity']=$qty;
+            $respose['item_reports'][$keyName]['total_cost']=$tcost;
             
         }
+       
+        $ordertype= orders::whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->pluck('order_type')->toArray();
+
+        $ordertype = array_count_values($ordertype);    
+        $respose['order_types']=$ordertype;
+
+       //echo '<pre>'; print_r($respose);
+        return view('pages/report',$respose);
     }
 }
 
