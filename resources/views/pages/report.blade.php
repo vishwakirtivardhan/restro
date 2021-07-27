@@ -22,14 +22,15 @@
     <br>
     <div class="card-deck mb-3 text-center">
         <?php
-        if(isset($order_types) && !empty($order_types) ){
-        foreach($order_types as $key=>$val){ ?>
+        if(isset($orderType) && !empty($orderType) ){
+        foreach($orderType as $key=>$val){ ?>
         <div class="card mb-4 box-shadow">
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal"><?php echo $key; ?></h4>
             </div>
             <div class="card-body">
-                <h1 class="card-title pricing-card-title"><?php echo $val; ?> <small class="text-muted">/ mo</small>
+                <h1 class="card-title pricing-card-title"><?php echo $val['orderNo']; ?> <small class="text-muted">/
+                        <?php echo $val['totalcost']; ?></small>
                 </h1>
                 <!-- <ul class="list-unstyled mt-3 mb-4">
                     <li>10 users included</li>

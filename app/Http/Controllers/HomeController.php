@@ -186,10 +186,19 @@ class HomeController extends Controller
                 $online_cost +=$val['total_price'];
             } 
         }
+
+        $respose['orderType']['Zomato']['totalcost']=$zomato_cost;
+        $respose['orderType']['Cash']['totalcost']=$cash_cost;
+        $respose['orderType']['Online']['totalcost']=$online_cost;
+
+        $respose['orderType']['Zomato']['orderNo']=$zomato;
+        $respose['orderType']['Online']['orderNo']=$online;
+        $respose['orderType']['Cash']['orderNo']=$cash;
+        
         //$ordertype = array_count_values($ordertype);    
         //$respose[2'order_types']=$ordertype;
 
-       echo '<pre>'; print_r($ordertype);
+      // echo '<pre>'; print_r($respose);
         return view('pages/report',$respose);
     }
 }

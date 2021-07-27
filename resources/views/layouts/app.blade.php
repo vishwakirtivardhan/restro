@@ -31,11 +31,11 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <!--   <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
+
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
@@ -44,21 +44,21 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <!-- Branding Image -->
+
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
+
                     <ul class="nav navbar-nav">
                         &nbsp;
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
+
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
+
                         @if (Auth::guest())
                         <li><a href="{{ route('login') }}">Login</a></li>
                         <li><a href="{{ route('register') }}">Register</a></li>
@@ -94,8 +94,34 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> -->
 
+        <nav class="site-header sticky-top py-1 text-light bg-dark text-light">
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+                @if (Auth::guest())
+
+                <a class="text-light py-2 d-none d-md-inline-block" href="{{ route('login') }}">Login</a>
+                <a class="text-light py-2 d-none d-md-inline-block" href="{{ route('register') }}">Register</a>
+                @else
+                <a class="py-2">
+                    Hi, {{ Auth::user()->name }}
+                </a>
+                <a class="text-light py-2 d-none d-md-inline-block" href="new_order">New Order</a>
+                <a class="text-light py-2 d-none d-md-inline-block" href="menu">Menu</a>
+                <a class="text-light py-2 d-none d-md-inline-block" href="report">Report</a>
+                <!-- <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
+                <a class="py-2 d-none d-md-inline-block" href="#"></a> -->
+                <a href="{{ route('logout') }}" class="text-light py-2 d-none d-md-inline-block" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+                @endif
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+
+            </div>
+        </nav>
         @yield('content')
     </div>
 
