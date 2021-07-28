@@ -21,9 +21,10 @@
         Total Amount : 0
     </button> -->
     <input type='hidden' name="totall_amount" id="totall_amount" placeholder="totall_amount" required="">
-    <input type='text' name="cust_name" placeholder="customer_name" required="">
+    <input type='text' name="cust_name" placeholder="customer_name">
     <input type='text' name="cust_phone" placeholder="customer_phone" required=""><br>
-    <select class="js-example-basic-single" name="order_type">
+    <select class="js-example-basic-single" name="order_type" required="">
+        <option value="">Select option</option>
         <option value="Cash">Cash</option>
         <option value="Online">Online</option>
         <option value="Zomato">Zomato</option>
@@ -173,7 +174,9 @@ $('.quantity').select2({
     width: '100%',
     placeholder: 'Select Quantity'
 });
-$('.js-example-basic-single').select2();
+$('.js-example-basic-single').select2({
+    width: '200px',
+});
 
 $(".add_item_list").click(function() {
     let appendHTML = '';

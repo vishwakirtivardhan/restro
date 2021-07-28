@@ -101,14 +101,17 @@
                 @if (Auth::guest())
 
                 <a class="text-light py-2 d-none d-md-inline-block" href="{{ route('login') }}">Login</a>
-                <a class="text-light py-2 d-none d-md-inline-block" href="{{ route('register') }}">Register</a>
+
                 @else
                 <a class="py-2">
                     Hi, {{ Auth::user()->name }}
                 </a>
                 <a class="text-light py-2 d-none d-md-inline-block" href="new_order">New Order</a>
+                @if(Auth::user()->type=='super')
                 <a class="text-light py-2 d-none d-md-inline-block" href="menu">Menu</a>
                 <a class="text-light py-2 d-none d-md-inline-block" href="report">Report</a>
+                <a class="text-light py-2 d-none d-md-inline-block" href="{{ route('register') }}">Register New User</a>
+                @endif
                 <!-- <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
                 <a class="py-2 d-none d-md-inline-block" href="#"></a> -->
                 <a href="{{ route('logout') }}" class="text-light py-2 d-none d-md-inline-block" onclick="event.preventDefault();
