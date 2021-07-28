@@ -180,13 +180,14 @@ $(".add_item_list").click(function() {
     let itemprice = $('#items_name').find(':selected').val();
     let item_name = $('#items_name').find(':selected').text();
     let quantity = $('.quantity').find(':selected').val();
-
+    //console.log(quantity);
+    //console.log(itemprice);
     let totalprice = quantity * itemprice;
-
+    //console.log(totalprice);
     appendHTML = '<tr><td><input class="form-control" name="item_name[]" value="' + item_name +
         '" ><input type="hidden" name="item_price[]" id="itemprice" class="form-control" value="' +
         itemprice +
-        '" ></td><td><input class="form-control" name="item_total_price[]" id="prices" value="' +
+        '" ></td><td><input class="form-control totalprice" name="item_total_price[]"  value="' +
         totalprice +
         '" ></td><td><input class="form-control" name="item_quantity[]" S_price="' + itemprice +
         '" onchange="quantityUpdate(this)" value="' + quantity +
@@ -204,12 +205,12 @@ $(".add_item_list").click(function() {
 
 function totalBillCal() {
     let totalbill = 0;
-    $("table #prices").each(function(index) {
+    $("#table_id .totalprice").each(function() {
         // totalbill = parseInt(totalbill);
         totalbill += parseInt($(this).val());
-
+        //console.log('c');
     });
-    //console.log(totalbill);totall_amount
+    //    console.log(totalbill);
     $('#totall_amount').val(totalbill);
     $('#total_bill').text('Total Amount :' + totalbill);
 }
