@@ -7,77 +7,109 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary popitem" data-toggle="modal" data-target="#exampleModal">
-    Add Item
-</button>
-<br><br><br>
-<button type="button" class="btn btn-danger " id="total_bill" disabled>
-    Total Amount : 0
-</button>
-<br><br>
-<form id="order_form" action="save_menu" method="post">
-    {{ csrf_field() }}
-    <!-- <button type="button" class="btn btn-primary " id="total_bill">
+
+<div class="container">
+    <br><br><br>
+
+    <div class="form-group " style="
+    border-radius: 7px;
+    padding: 50px;
+    border: 1px solid #007bff73;
+    box-shadow: 5px 7px 5px #9699967a;
+">
+        <button type="button" class="btn btn-primary popitem" data-toggle="modal" data-target="#exampleModal">
+            Add Items to Lists
+        </button>
+        <br><br><br>
+        <form id="order_form" class="row" action="save_menu" method="post">
+            {{ csrf_field() }}
+            <!-- <button type="button" class="btn btn-primary " id="total_bill">
         Total Amount : 0
     </button> -->
-    <input type='hidden' name="totall_amount" id="totall_amount" placeholder="totall_amount" required="">
-    <input type='text' name="cust_name" placeholder="customer_name">
-    <input type='text' name="cust_phone" placeholder="customer_phone" required=""><br>
-    <select class="js-example-basic-single" name="order_type" required="">
-        <option value="">Select option</option>
-        <option value="Cash">Cash</option>
-        <option value="Online">Online</option>
-        <option value="Zomato">Zomato</option>
-    </select>
-    <table>
-        <tbody>
+
+            <div class="form-group col-md-4">
+                <label for="formGroupExampleInput">Customer Name</label>
+                <input type='text' name="cust_name" class="form-control" placeholder="customer_name">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="formGroupExampleInput">Customer Phone</label>
+                <input type='text' name="cust_phone" class="form-control" placeholder="customer_phone" required="">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="formGroupExampleInput">Order Type</label>
+                <select class="form-control " name="order_type" required="">
+                    <option value="">Select option</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Online">Online</option>
+                    <option value="Zomato">Zomato</option>
+                </select>
+            </div>
+            <input type='hidden' class="form-control" name="totall_amount" id="totall_amount"
+                placeholder="totall_amount" required="">
+
+
+
+            <table id="tableForm" style="margin:auto">
+                <tbody>
+                    <tr>
+                        <th>Items</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-danger" id="total_bill" disabled>
+                Total Amount : 0
+            </button>
+            <div class="col-md-12">
+
+                <button type="Submit" class="btn btn-primary" name="submit" id="order_bill">
+                    CheckOut
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <br><br>
+
+
+
+    <table id="table_id" class="display">
+        <thead>
             <tr>
-                <th>Items</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <th>Order id</th>
+                <th>Customer Name</th>
+                <th>Customer Phone</th>
+                <th>Total Price</th>
+                <th>Order Type</th>
+                <th>Menu</th>
+                <th>Action</th>
             </tr>
-        </tbody>
-    </table>
-
-    <button type="Submit" class="btn btn-primary " name="submit" id="order_bill">
-        CheckOut
-    </button>
-</form>
-
-
-<table id="table_id" class="display">
-    <thead>
-        <tr>
-            <th>Order id</th>
-            <th>Customer Name</th>
-            <th>Customer Phone</th>
-            <th>Total Price</th>
-            <th>Order Type</th>
-            <th>Menu</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach($all_order as $key=>$val){ ?>
-        <tr id="{{ $val['id'] }}">
-            <td>{{ $val['id'] }}</td>
-            <td>{{ $val['cust_name'] }}</td>
-            <td>{{ $val['cust_phone'] }}</td>
-            <td>{{ $val['total_price'] }}</td>
-            <td>{{ $val['order_type'] }}</td>
-            <td><?php foreach($val['order_lists'] as $key){ echo '<b> Item: </b>'.$key['name'].'<b> Qty:</b>'.$key['quantity'].'<b> T.Cost: </b>'.$key['total_cost'].'<br>'; } ?>
-            </td>
-            <td><button class="btn btn-warning order-status" data-type="Cancel">Cancel</button> | <button
-                    class="btn btn-danger order-status" data-type="Delete">Delete</button></td>
-        </tr>
-        <?php } ?>
-        <!-- <tr>
+        </thead>
+        <tbody>
+            <?php foreach($all_order as $key=>$val){ ?>
+            <tr id="{{ $val['id'] }}">
+                <td>{{ $val['id'] }}</td>
+                <td>{{ $val['cust_name'] }}</td>
+                <td>{{ $val['cust_phone'] }}</td>
+                <td>{{ $val['total_price'] }}</td>
+                <td>{{ $val['order_type'] }}</td>
+                <td><?php foreach($val['order_lists'] as $key){ echo '<b> Item: </b>'.$key['name'].'<b> Qty:</b>'.$key['quantity'].'<b> T.Cost: </b>'.$key['total_cost'].'<br>'; } ?>
+                </td>
+                <td><button
+                        class="btn  <?php if($val['orderStatus']!='Cancel'){ ?>btn-warning order-status <?php } else{ ?>btn-danger<?php }  ?>"
+                        data-type="Cancel">Cancel</button>
+                    <!-- <button class="btn btn-danger order-status" data-type="Delete">Delete</button> -->
+                </td>
+            </tr>
+            <?php } ?>
+            <!-- <tr>
             <td>Row 2 Data 1</td>
             <td>Row 2 Data 2</td>
         </tr> -->
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -141,7 +173,7 @@ $("table .order-status").click(function() {
     // alert(order_ids);
     if (order_ids != null && order_ids !== '' && type !== null && type !== '') {
         $.ajax({
-            url: "http://localhost:8080/blog/orderStausChange?id=" + order_ids + "&&type=" + type,
+            url: "http://localhost:8080/restro/orderStausChange?id=" + order_ids + "&&type=" + type,
             type: 'GET',
             dataType: 'json', // added data type
             success: function(res) {
@@ -190,13 +222,13 @@ $(".add_item_list").click(function() {
     appendHTML = '<tr><td><input class="form-control" name="item_name[]" value="' + item_name +
         '" ><input type="hidden" name="item_price[]" id="itemprice" class="form-control" value="' +
         itemprice +
-        '" ></td><td><input class="form-control totalprice" name="item_total_price[]"  value="' +
+        '" ></td><td><input class="form-control totalprice" id="prices" name="item_total_price[]"  value="' +
         totalprice +
         '" ></td><td><input class="form-control" name="item_quantity[]" S_price="' + itemprice +
         '" onchange="quantityUpdate(this)" value="' + quantity +
         '" ></td><td><span class="btn btn-warning remove-item" > - </span></td></tr>';
 
-    $('table tbody').append(appendHTML);
+    $('#tableForm tbody').append(appendHTML);
     totalBillCal();
     alert('Add to Cart');
     $(".js-example-basic-single").select2({
@@ -207,13 +239,14 @@ $(".add_item_list").click(function() {
 });
 
 function totalBillCal() {
+    console.log('check');
     let totalbill = 0;
-    $("#table_id .totalprice").each(function() {
+    $("#tableForm .totalprice").each(function() {
         // totalbill = parseInt(totalbill);
         totalbill += parseInt($(this).val());
         //console.log('c');
     });
-    //    console.log(totalbill);
+    console.log(totalbill);
     $('#totall_amount').val(totalbill);
     $('#total_bill').text('Total Amount :' + totalbill);
 }
@@ -223,6 +256,7 @@ function quantityUpdate(data) {
     let quantity = data.value;
     let price = $(data).attr('S_price');
     let total = quantity * price;
+    console.log(total);
     $(data).closest('tr').find('#prices').val(total);
     totalBillCal();
 }
@@ -232,4 +266,5 @@ function quantityUpdate(data) {
 
 // });
 </script>
+
 @endsection

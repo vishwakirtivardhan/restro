@@ -31,15 +31,17 @@ class HomeController extends Controller
 
     public function menu()
     {
-        return view('pages/menu_list');
+        $menuList=menu_list::all()->toArray();
+      // echo '<pre>';  print_r($menuList);die;
+        return view('pages/menu_list',['menuList'=>$menuList]);
     }
 
     public function menu_save(Request $res)
     {
         
         menu_list::create(['name' => $res->menu_name,'price' => $res->price,'status' => $res->status]);
-         
-         return view('pages/menu_list');
+        $menuList=menu_list::all()->toArray();
+         return view('pages/menu_list',['menuList'=>$menuList]);
     }
 
     public function new_order()
@@ -93,6 +95,7 @@ class HomeController extends Controller
         $order->cust_phone=$res->cust_phone;
         $order->total_price=$res->totall_amount;
         $order->order_type=$res->order_type;
+        $order->orderStatus='Active';
         $order->save();
         $respose['order']=$order;
         //echo $order->id;die;
@@ -135,7 +138,7 @@ class HomeController extends Controller
     }
 
     public function orderStatus(Request $res){
-        
+        //die('check');
        $result= orders::where('id',$res->id)->update(['orderStatus'=>$res->type]);
        //echo "<pre>"; print_r($result);
         if($result==1){
@@ -152,7 +155,9 @@ class HomeController extends Controller
         //$fromDate='2021-07-15';
         //$toDate='2021-07-23';
        // echo gettype($fromDate);die;
-        $orderName= order_list::distinct()->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->pluck('name')->toArray();
+        $orderName= order_list::distinct()->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])
+        
+        ->pluck('name')->toArray();
         //echo '<pre>'; print_r($orderName);die;
         //$respose['item_reports'];
         foreach($orderName as $keyName){
@@ -169,7 +174,9 @@ class HomeController extends Controller
             
         }
        
-        $ordertype= orders::select('order_type','total_price')->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->get()->toArray();
+        $ordertype= orders::select('order_type','total_price')
+        ->whereNotIn('orderStatus', ['Cancel','Delete'])
+        ->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->get()->toArray();
         $zomato=$online=$cash=0;
         $zomato_cost=$online_cost=$cash_cost=0;
         foreach($ordertype as $key=>$val){

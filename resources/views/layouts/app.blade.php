@@ -27,6 +27,21 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!-- <script>
+    $(document).ready(function() {
+        //$(".fullscreen_button").on("click", function() {
+        document.fullScreenElement && null !== document.fullScreenElement || !document
+            .mozFullScreen && !document.webkitIsFullScreen ? document.documentElement
+            .requestFullScreen ? document.documentElement.requestFullScreen() : document
+            .documentElement.mozRequestFullScreen ? document.documentElement
+            .mozRequestFullScreen() : document.documentElement.webkitRequestFullScreen && document
+            .documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT) : document
+            .cancelFullScreen ? document.cancelFullScreen() : document.mozCancelFullScreen ?
+            document.mozCancelFullScreen() : document.webkitCancelFullScreen && document
+            .webkitCancelFullScreen()
+        //});
+    });
+    </script> -->
 </head>
 
 <body>
@@ -108,9 +123,10 @@
                 </a>
                 <a class="text-light py-2 d-none d-md-inline-block" href="new_order">New Order</a>
                 @if(Auth::user()->type=='super')
-                <a class="text-light py-2 d-none d-md-inline-block" href="menu">Menu</a>
-                <a class="text-light py-2 d-none d-md-inline-block" href="report">Report</a>
-                <a class="text-light py-2 d-none d-md-inline-block" href="{{ route('register') }}">Register New User</a>
+                <a class="text-light py-2 d-none d-md-inline-block " href="menu">Menu</a>
+                <a class="text-light py-2 d-none d-md-inline-block " href="report">Report</a>
+                <a class="text-light py-2 d-none d-md-inline-block " href="{{ route('register') }}">Register New
+                    User</a>
                 @endif
                 <!-- <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
                 <a class="py-2 d-none d-md-inline-block" href="#"></a> -->
@@ -188,9 +204,11 @@
         </div>
     </footer>
 </body>
+
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
 
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
 <script>
 $(document).ready(function() {
     $('#table_id').DataTable();
