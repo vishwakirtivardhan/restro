@@ -89,7 +89,7 @@
         <tbody>
             <?php foreach($all_order as $key=>$val){ ?>
             <tr id="{{ $val['id'] }}">
-                <td>{{ $val['id'] }}</td>
+                <td>{{ $val['id'] }} <br> <b> Token: </b>{{ $val['bill_no'] }}</td>
                 <td>{{ $val['cust_name'] }}</td>
                 <td>{{ $val['cust_phone'] }}</td>
                 <td>{{ $val['total_price'] }}</td>
@@ -98,7 +98,8 @@
                 </td>
                 <td><button
                         class="btn  <?php if($val['orderStatus']!='Cancel'){ ?>btn-warning order-status <?php } else{ ?>btn-danger<?php }  ?>"
-                        data-type="Cancel">Cancel</button>
+                        data-type="Cancel"> <?php if($val['orderStatus']!='Cancel'){ ?> Cancel
+                        <?php } else{ ?>Cancelled<?php }  ?></button>
                     <!-- <button class="btn btn-danger order-status" data-type="Delete">Delete</button> -->
                 </td>
             </tr>
@@ -111,8 +112,7 @@
     </table>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -169,6 +169,7 @@ $("table .order-status").click(function() {
     //alert('check');
     let type = $(this).attr('data-type');
     // alert(type);
+    $(this).addClass('btn-danger');
     let order_ids = $(this).closest('tr').attr('id');
     // alert(order_ids);
     if (order_ids != null && order_ids !== '' && type !== null && type !== '') {
@@ -219,12 +220,16 @@ $(".add_item_list").click(function() {
     //console.log(itemprice);
     let totalprice = quantity * itemprice;
     //console.log(totalprice);
-    appendHTML = '<tr><td><input class="form-control" name="item_name[]" value="' + item_name +
-        '" ><input type="hidden" name="item_price[]" id="itemprice" class="form-control" value="' +
+    appendHTML = '<tr><td><input type="hidden" class="form-control" name="item_name[]" value="' + item_name +
+        '" ><input class="form-control" value="' + item_name +
+        '" disabled><input type="hidden" name="item_price[]" id="itemprice" class="form-control" value="' +
         itemprice +
-        '" ></td><td><input class="form-control totalprice" id="prices" name="item_total_price[]"  value="' +
+        '" ><input type="hidden" name="item_total_price[]" id="prices" class="form-control totalprice totalpricetotal" value="' +
         totalprice +
-        '" ></td><td><input class="form-control" name="item_quantity[]" S_price="' + itemprice +
+        '" ></td><td><input class="form-control totalprice" id="prices"   value="' +
+        totalprice +
+        '" disabled></td><td><input type="number" class="form-control" name="item_quantity[]" S_price="' +
+        itemprice +
         '" onchange="quantityUpdate(this)" value="' + quantity +
         '" ></td><td><span class="btn btn-warning remove-item" > - </span></td></tr>';
 
@@ -241,7 +246,7 @@ $(".add_item_list").click(function() {
 function totalBillCal() {
     console.log('check');
     let totalbill = 0;
-    $("#tableForm .totalprice").each(function() {
+    $("#tableForm .totalpricetotal").each(function() {
         // totalbill = parseInt(totalbill);
         totalbill += parseInt($(this).val());
         //console.log('c');
@@ -257,7 +262,7 @@ function quantityUpdate(data) {
     let price = $(data).attr('S_price');
     let total = quantity * price;
     console.log(total);
-    $(data).closest('tr').find('#prices').val(total);
+    $(data).closest('tr').find('.totalprice').val(total);
     totalBillCal();
 }
 

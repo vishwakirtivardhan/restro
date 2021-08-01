@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\menu_list;
 use App\order_list;
 use App\orders;
+use DateTime;
+use Carbon\Carbon;
+
+
 class HomeController extends Controller
 {
     /**
@@ -47,13 +51,13 @@ class HomeController extends Controller
     public function new_order()
     {
         $respose=[];
-        $all_order = orders::orderBy('id', 'DESC')->get()->toArray();
+        $all_order = orders::where('created_at', '>', Carbon::today())->get()->toArray();
         // echo '<pre>';print_r($all_order);die;
         //allorder();
         
         foreach($all_order as $key=>$val){
             // echo $val['id'];die;
-           $orderDeatils = order_list::where('order_id','=',$val['id'])->take(50)->get()->toArray();
+           $orderDeatils = order_list::where('order_id','=',$val['id'])->get()->toArray();
            $all_order[$key]['order_lists']=$orderDeatils;
            
         }
@@ -78,8 +82,40 @@ class HomeController extends Controller
     }
 
     public function save_order(Request $res){
+
+
        $menu=$respose=[];
-        $cust_name = $res->cust_name;
+        
+       $lastrecord= orders::all()->last()
+    //    ->get()
+        ->toArray();
+        $createDate = new DateTime($lastrecord['created_at']);
+        $createDate = $createDate->format('Y-m-d');
+
+        //print_r($createDate);
+        //echo '<br>';
+        // die;
+       // print_r(date('y-d-m h:i:s',time()));
+    //   print_r($lastrecord['created_at'] - date('m/d/Y h:i:s a', time()));die;
+       
+       $now = new DateTime();
+      // echo $date_ifi=date("Y-m-d");
+      // echo '<br>';
+       //die;
+    //    $difference = $createDate->diff($date_ifi);
+       $createdates = date_create($createDate);
+       $createcurrent = date_create(date("Y-m-d"));
+       $difference =date_diff($createdates,$createcurrent);
+        // print_r($difference);
+        // die;
+        $token=0;
+       if($difference->d==0){
+        $token = @$lastrecord['bill_no']+1;
+       }else{
+        $token=1;
+       }
+    //   echo $token;die;
+       $cust_name = $res->cust_name;
         $cust_phone = $res->cust_phone;
         $item_name = $res->item_name;
        // print_r($item_name);// comming
@@ -96,6 +132,7 @@ class HomeController extends Controller
         $order->total_price=$res->totall_amount;
         $order->order_type=$res->order_type;
         $order->orderStatus='Active';
+        $order->bill_no=$token;
         $order->save();
         $respose['order']=$order;
         //echo $order->id;die;

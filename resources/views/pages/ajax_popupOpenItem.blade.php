@@ -1,3 +1,5 @@
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <form>
     <div class="row">
         <div class="col">
@@ -38,14 +40,14 @@
 </form>
 <script>
 $('.js-example-basic-single').select2({
-    placeholder: "Select a state",
-    allowClear: true
+    placeholder: "Select a state"
+    //allowClear: true
 });
 
 
 $('.quantity').select2({
-    placeholder: "Select a state",
-    allowClear: true
+    placeholder: "Select a state"
+    // allowClear: true
 });
 
 function onselectchange() {

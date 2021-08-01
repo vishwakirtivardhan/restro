@@ -27,7 +27,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!-- <script>
+    <script>
     $(document).ready(function() {
         //$(".fullscreen_button").on("click", function() {
         document.fullScreenElement && null !== document.fullScreenElement || !document
@@ -41,7 +41,7 @@
             .webkitCancelFullScreen()
         //});
     });
-    </script> -->
+    </script>
 </head>
 
 <body>
@@ -211,7 +211,12 @@
 
 <script>
 $(document).ready(function() {
-    $('#table_id').DataTable();
+    $('#table_id').DataTable({
+        "order": [
+            [0, "desc"]
+        ]
+
+    });
 });
 </script>
 

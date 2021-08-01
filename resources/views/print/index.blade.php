@@ -206,7 +206,7 @@ img {
             </div>
             <div class="number">
                 <div class="date"><?php echo $order->created_at; ?></div>
-                <div class="ref">of-113</div>
+                <div class="ref">Token : <?php echo $order->bill_no; ?></div>
             </div>
         </div>
         <div class="body">
