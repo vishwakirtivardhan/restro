@@ -28,19 +28,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-        //$(".fullscreen_button").on("click", function() {
-        document.fullScreenElement && null !== document.fullScreenElement || !document
-            .mozFullScreen && !document.webkitIsFullScreen ? document.documentElement
-            .requestFullScreen ? document.documentElement.requestFullScreen() : document
-            .documentElement.mozRequestFullScreen ? document.documentElement
-            .mozRequestFullScreen() : document.documentElement.webkitRequestFullScreen && document
-            .documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT) : document
-            .cancelFullScreen ? document.cancelFullScreen() : document.mozCancelFullScreen ?
-            document.mozCancelFullScreen() : document.webkitCancelFullScreen && document
-            .webkitCancelFullScreen()
-        //});
-    });
+    // $(document).ready(function() {
+    //     //$(".fullscreen_button").on("click", function() {
+    //     document.fullScreenElement && null !== document.fullScreenElement || !document
+    //         .mozFullScreen && !document.webkitIsFullScreen ? document.documentElement
+    //         .requestFullScreen ? document.documentElement.requestFullScreen() : document
+    //         .documentElement.mozRequestFullScreen ? document.documentElement
+    //         .mozRequestFullScreen() : document.documentElement.webkitRequestFullScreen && document
+    //         .documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT) : document
+    //         .cancelFullScreen ? document.cancelFullScreen() : document.mozCancelFullScreen ?
+    //         document.mozCancelFullScreen() : document.webkitCancelFullScreen && document
+    //         .webkitCancelFullScreen()
+    //     //});
+    // });
     </script>
 </head>
 

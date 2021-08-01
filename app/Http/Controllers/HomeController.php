@@ -245,6 +245,28 @@ class HomeController extends Controller
       // echo '<pre>'; print_r($respose);
         return view('pages/report',$respose);
     }
+
+    function menuStatus(Request $res){
+        $result= menu_list::where('id',$res->id)->update(['status'=>$res->type]);
+       //echo "<pre>"; print_r($result);
+        if($result==1){
+            return 'success';
+        }else{
+            return 'Failed';
+        }
+    }
+
+    function updatePrice(Request $res){
+
+        $result= menu_list::where('id',$res->id)->update(['price'=>$res->updatePrice]);
+       //echo "<pre>"; print_r($result);
+        if($result==1){
+            return 'success';
+        }else{
+            return 'Failed';
+        }
+
+    }
 }
 
     

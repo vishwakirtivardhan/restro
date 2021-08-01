@@ -25,6 +25,7 @@ Route::get('popupOpenItem', 'HomeController@popupOpenItem');
 
 Route::post('save_menu', 'HomeController@save_order');
 Route::get('orderStausChange', 'HomeController@orderStatus');
-
+Route::get('menuStatus', 'HomeController@menuStatus');
 Route::get('report', 'HomeController@customReport');
+Route::get('updatePrice','HomeController@updatePrice');
 //Route::post('/print', function() { return view('pages/ajax_popupOpenItem'); });

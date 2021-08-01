@@ -59,12 +59,23 @@
             <tr id="{{ $val['id'] }}">
                 <td>{{ $val['id'] }}</td>
                 <td>{{ $val['name'] }}</td>
-                <td>{{ $val['price'] }}</td>
+                <td class="priceChange">{{ $val['price'] }}</td>
                 <td>{{ $val['status'] }}</td>
                 <td>{{ $val['updated_at'] }}</td>
                 <td>{{ $val['created_at'] }}</td>
-                <td><button class="btn btn-warning order-status" data-type="Cancel">Cancel</button> | <button
-                        class="btn btn-danger order-status" data-type="Delete">Delete</button></td>
+                <td> <select class="btn menuchange">
+                        <option value="">
+                            -- Select Action --
+                        </option>
+                        <option value="A">
+                            Active
+                        </option>
+                        <option value="N">
+                            disabled
+                        </option>
+                    </select>
+                    <button class="btn btn-danger order-status" data-type="Delete">Delete</button>
+                </td>
             </tr>
             <?php } } ?>
             <!-- <tr>
@@ -74,5 +85,63 @@
         </tbody>
     </table>
 </div>
+<script>
+$(".menuchange").change(function() {
+    // confirm('Do you Want to change the Status ?');
+    type = $('option:selected', this).val();
+    let menu_ids = $(this).closest('tr').attr('id');
+    // alert(menu_ids);
 
+    if (menu_ids != null && menu_ids !== '' && type !== null && type !== '') {
+        $.ajax({
+            url: "http://localhost:8080/restro/menuStatus?id=" + menu_ids + "&type=" + type,
+            type: 'GET',
+            //dataType: 'json', // added data type
+            success: function(res) {
+                //console.log(res);
+                alert(res);
+
+                location.reload();
+            }
+        });
+
+
+        // alert("Order : " + type);
+    } else {
+        alert('Some thing is Worng. Pls connect company');
+    }
+});
+
+$(".priceChange").click(function() {
+    //alert('check');
+    let price = $(this).text();
+    // alert(price);
+    let updatePrice = prompt("Please enter New Price", $(this).text());
+    //alert(updatePrice);
+    // let type = $(this).attr('data-type');
+    // // alert(type);
+    // $(this).addClass('btn-danger');
+    let menu_ids = $(this).closest('tr').attr('id');
+    //alert(menu_ids);
+    if (menu_ids != null && menu_ids !== '' && updatePrice !== null && updatePrice !== price) {
+        $.ajax({
+            url: "http://localhost:8080/restro/updatePrice?id=" + menu_ids + "&updatePrice=" +
+                updatePrice,
+            type: 'GET',
+            // dataType: 'json', // added data type
+            success: function(res) {
+                // console.log(res);
+                alert(res);
+                location.reload();
+            }
+
+        });
+
+
+        // alert("Order : " + type);
+    } else {
+        alert('You have not change he Cost');
+    }
+});
+</script>
 @endsection
