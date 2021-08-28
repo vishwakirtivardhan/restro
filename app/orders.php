@@ -17,6 +17,7 @@ class orders extends Model
     protected $table = 'orders';
 
     protected $fillable = [
-        'cust_name','cust_phone','orderStatus','total_price','bill_no','order_type'
+        
+        'cust_name','cust_phone','orderStatus','total_price','bill_no','order_type','emp_name'
     ];
 }

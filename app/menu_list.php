@@ -16,7 +16,7 @@ class menu_list extends Model
     protected $table = 'menu_lists';
 
     protected $fillable = [
-        'name','price','status'
+        'name','price','status','category'
     ];
     // public $timestamps = true;
 }

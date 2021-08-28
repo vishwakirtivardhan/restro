@@ -2,8 +2,10 @@
 
 @section('content')
 
-<div class="container">
+<div class="container" class="m-t-5">
+
     <form class="needs-validation" novalidate action="http://localhost:8080/restro/report" method="get">
+        <br><br>
         <div class="form-row">
             <div class="col-md-6 mb-3">
                 <label for="validationTooltip01">Select Date From:</label>
@@ -20,6 +22,8 @@
     </form>
     <br>
     <br>
+
+    <h3>Orders Placed</h3>
     <div class="card-deck mb-3 text-center">
         <?php
         if(isset($orderType) && !empty($orderType) ){
@@ -32,17 +36,49 @@
                 <h1 class="card-title pricing-card-title"><?php echo $val['orderNo']; ?> <small class="text-muted">/
                         <?php echo $val['totalcost']; ?></small>
                 </h1>
-                <!-- <ul class="list-unstyled mt-3 mb-4">
-                    <li>10 users included</li>
-                    <li>2 GB of storage</li>
-                    <li>Email support</li>
-                    <li>Help center access</li>
-                </ul> -->
-                <!-- <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button> -->
             </div>
         </div>
         <?php } } ?>
     </div>
+
+    <br>
+    <h3>Orders Discount</h3>
+    <div class="card-deck mb-3 text-center">
+        <?php
+        if(isset($orderType_d) && !empty($orderType_d) ){
+        foreach($orderType_d as $key=>$val){ ?>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal"><?php echo $key; ?></h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title"><?php echo $val['orderNo']; ?> <small class="text-muted">/
+                        <?php echo $val['totalcost']; ?></small>
+                </h1>
+            </div>
+        </div>
+        <?php } } ?>
+    </div>
+
+    <br>
+    <h3>Orders Cancel</h3>
+    <div class="card-deck mb-3 text-center">
+        <?php
+        if(isset($orderType_c) && !empty($orderType_c) ){
+        foreach($orderType_c as $key=>$val){ ?>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal"><?php echo $key; ?></h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title"><?php echo $val['orderNo']; ?> <small class="text-muted">/
+                        <?php echo $val['totalcost']; ?></small>
+                </h1>
+            </div>
+        </div>
+        <?php } } ?>
+    </div>
+
 
 
     <table class="table table-striped">
@@ -69,43 +105,5 @@
         </tbody>
     </table>
 
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <img class="mb-2" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""
-                    width="24" height="24">
-                <small class="d-block mb-3 text-muted">© 2017-2018</small>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Features</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Cool stuff</a></li>
-                    <li><a class="text-muted" href="#">Random feature</a></li>
-                    <li><a class="text-muted" href="#">Team feature</a></li>
-                    <li><a class="text-muted" href="#">Stuff for developers</a></li>
-                    <li><a class="text-muted" href="#">Another one</a></li>
-                    <li><a class="text-muted" href="#">Last time</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Resource</a></li>
-                    <li><a class="text-muted" href="#">Resource name</a></li>
-                    <li><a class="text-muted" href="#">Another resource</a></li>
-                    <li><a class="text-muted" href="#">Final resource</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>About</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Team</a></li>
-                    <li><a class="text-muted" href="#">Locations</a></li>
-                    <li><a class="text-muted" href="#">Privacy</a></li>
-                    <li><a class="text-muted" href="#">Terms</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
 </div>
 @endsection

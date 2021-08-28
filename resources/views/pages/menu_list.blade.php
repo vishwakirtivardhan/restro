@@ -4,7 +4,7 @@
 
 <?php //print_r($menuList); ?>
 <div class="container">
-    <form action="menu_save" method="post" class="row" style="padding: 54px;
+    <form action="menu_save" method="Post" class="row" style="padding: 54px;
     border: 1px solid #00000352;
     margin-top: 50px;
     box-shadow: 5px 7px 5px #9699967a;
@@ -18,15 +18,24 @@
 
         <div class="form-group col-md-4">
             <label for="formGroupExampleInput">Items Price (Single Item)</label>
-            <input type='text' name="price" class="form-control">
+            <input type='number' name="price" class="form-control">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="formGroupExampleInput">Select Category</label>
+            <select name='status' class="form-control">
+                <option value="A">Active</option>
+                <option value="N">Disable</option>
+            </select>
         </div>
 
         <div class="form-group col-md-4">
             <label for="formGroupExampleInput">Action</label>
-            <select name='status' class="form-control">
-                <option value="A">Active</option>
-                <option value="N">Disable</option>
-
+            <select name='category' class="form-control">
+                <option value="Farali">Farali</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Jain">Jain</option>
+                <option value="Normal">Normal</option>
             </select>
         </div>
 
@@ -45,6 +54,7 @@
                 <th>id</th>
                 <th>Name</th>
                 <th>Price</th>
+                <th>Category</th>
                 <th>status</th>
 
                 <th>Updated At</th>
@@ -60,6 +70,7 @@
                 <td>{{ $val['id'] }}</td>
                 <td>{{ $val['name'] }}</td>
                 <td class="priceChange">{{ $val['price'] }}</td>
+                <td>{{$val['category']}}</td>
                 <td>{{ $val['status'] }}</td>
                 <td>{{ $val['updated_at'] }}</td>
                 <td>{{ $val['created_at'] }}</td>

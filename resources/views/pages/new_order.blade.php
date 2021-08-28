@@ -21,33 +21,41 @@
             Add Items to Lists
         </button>
         <br><br><br>
-        <form id="order_form" class="row" action="save_menu" method="post">
+        <form id="order_form" class="row" action="save_menu" method="post" style="display:none">
             {{ csrf_field() }}
             <!-- <button type="button" class="btn btn-primary " id="total_bill">
         Total Amount : 0
     </button> -->
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label for="formGroupExampleInput">Customer Name</label>
                 <input type='text' name="cust_name" class="form-control" placeholder="customer_name">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label for="formGroupExampleInput">Customer Phone</label>
-                <input type='text' name="cust_phone" class="form-control" placeholder="customer_phone" required="">
+                <input type='number' name="cust_phone" class="form-control" placeholder="customer_phone" required="">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label for="formGroupExampleInput">Order Type</label>
-                <select class="form-control " name="order_type" required="">
+                <select class="form-control " name="order_type" onselect="fun_ordertype()" required="">
                     <option value="">Select option</option>
                     <option value="Cash">Cash</option>
                     <option value="Online">Online</option>
                     <option value="Zomato">Zomato</option>
                 </select>
             </div>
+
+            <div class="form-group col-md-3">
+                <label for="formGroupExampleInput">Discount %</label>
+                <input type='number' name="discount_per" class="form-control" placeholder="discount %"
+                    id="disount_enter" on>
+            </div>
+
+            <input type='hidden' class="form-control" name="dis_amount" id="dis_amount" placeholder="dis_amount"
+                required="">
+
             <input type='hidden' class="form-control" name="totall_amount" id="totall_amount"
-                placeholder="totall_amount" required="">
-
-
+                placeholder="totall_amount">
 
             <table id="tableForm" style="margin:auto">
                 <tbody>
@@ -83,6 +91,7 @@
                 <th>Total Price</th>
                 <th>Order Type</th>
                 <th>Menu</th>
+                <th> Order Created By</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -96,6 +105,7 @@
                 <td>{{ $val['order_type'] }}</td>
                 <td><?php foreach($val['order_lists'] as $key){ echo '<b> Item: </b>'.$key['name'].'<b> Qty:</b>'.$key['quantity'].'<b> T.Cost: </b>'.$key['total_cost'].'<br>'; } ?>
                 </td>
+                <td>{{$val['emp_name']}}</td>
                 <td><button
                         class="btn  <?php if($val['orderStatus']!='Cancel'){ ?>btn-warning order-status <?php } else{ ?>btn-danger<?php }  ?>"
                         data-type="Cancel"> <?php if($val['orderStatus']!='Cancel'){ ?> Cancel
@@ -132,6 +142,10 @@
     </div>
 </div>
 <script>
+function fun_ordertype() {
+    alert('checls');
+    console.log($(this).val());
+}
 // This taking the disable 
 $.fn.serializeIncludeDisabled = function() {
     let disabled = this.find(":input:disabled").removeAttr("disabled");
@@ -213,6 +227,7 @@ $('.js-example-basic-single').select2({
 
 $(".add_item_list").click(function() {
     let appendHTML = '';
+    $('#order_form').show();
     let itemprice = $('#items_name').find(':selected').val();
     let item_name = $('#items_name').find(':selected').text();
     let quantity = $('.quantity').find(':selected').val();
@@ -267,9 +282,19 @@ function quantityUpdate(data) {
 }
 
 
-// $(".target").change(function() {
+$("#disount_enter").keyup(function() {
+    //alert("Handler for .keyup() called.");
+    let dis_a = $(this).val();
+    let amount = $('#totall_amount').val();
 
-// });
+    let dis_amount = (dis_a * amount) / 100;
+    console.log(amount - dis_amount);
+    let totollAmount = amount - dis_amount;
+    $('#total_bill').html('Totall Amount :' +
+        amount + '<br> Total Discount :' + totollAmount);
+
+    $('#dis_amount').val(totollAmount);
+});
 </script>
 
 @endsection

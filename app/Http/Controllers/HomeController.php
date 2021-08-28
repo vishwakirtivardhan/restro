@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\menu_list;
 use App\order_list;
 use App\orders;
+// use App\Auth;
 use DateTime;
 use Carbon\Carbon;
 
@@ -42,15 +43,17 @@ class HomeController extends Controller
 
     public function menu_save(Request $res)
     {
-        
-        menu_list::create(['name' => $res->menu_name,'price' => $res->price,'status' => $res->status]);
-        $menuList=menu_list::all()->toArray();
-         return view('pages/menu_list',['menuList'=>$menuList]);
+    // dd($res->category);
+        menu_list::create(['name' => $res->menu_name,'category' =>$res->category,'price' => $res->price,'status' => $res->status]);
+        // $menuList=menu_list::all()->toArray();
+        return redirect('menu');
+        //  return view('pages/menu_list',['menuList'=>$menuList]);
     }
 
     public function new_order()
     {
         $respose=[];
+        
         $all_order = orders::where('created_at', '>', Carbon::today())->get()->toArray();
         // echo '<pre>';print_r($all_order);die;
         //allorder();
@@ -85,7 +88,8 @@ class HomeController extends Controller
 
 
        $menu=$respose=[];
-        
+       $user = auth()->user();
+       $employee = $user->name; 
        $lastrecord= orders::all()->last()
     //    ->get()
         ->toArray();
@@ -128,9 +132,12 @@ class HomeController extends Controller
         $totall_amount=$res->totall_amount;
         $order=new orders();
         $order->cust_name=$res->cust_name;
+        $order->emp_name=$employee;
         $order->cust_phone=$res->cust_phone;
         $order->total_price=$res->totall_amount;
         $order->order_type=$res->order_type;
+        $order->discount_per=$res->discount_per;
+        $order->dis_amount=$res->dis_amount;
         $order->orderStatus='Active';
         $order->bill_no=$token;
         $order->save();
@@ -239,6 +246,67 @@ class HomeController extends Controller
         $respose['orderType']['Online']['orderNo']=$online;
         $respose['orderType']['Cash']['orderNo']=$cash;
         
+
+        $ordercancel= orders::select('order_type','total_price')
+        ->whereIn('orderStatus', ['Cancel'])
+        ->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->get()->toArray();
+
+
+        $zomato_c=$online_c=$cash_c=0;
+        $zomato_cost_c=$online_cost_c=$cash_cost_c=0;
+        foreach($ordercancel as $key=>$val){
+            if($val['order_type']=='Zomato'){
+                $zomato_c++; 
+                $zomato_cost_c +=$val['total_price'];
+            }
+            if($val['order_type']=='Cash'){
+                $cash_c++;
+                $cash_cost_c +=$val['total_price'];
+            }
+            if($val['order_type']=='Online'){
+                $online_c++;
+                $online_cost_c +=$val['total_price'];
+            } 
+        }
+
+        $respose['orderType_c']['Zomato']['totalcost']=$zomato_cost_c;
+        $respose['orderType_c']['Cash']['totalcost']=$cash_cost_c;
+        $respose['orderType_c']['Online']['totalcost']=$online_cost_c;
+
+        $respose['orderType_c']['Zomato']['orderNo']=$zomato_c;
+        $respose['orderType_c']['Online']['orderNo']=$online_c;
+        $respose['orderType_c']['Cash']['orderNo']=$cash_c;
+
+
+        $orderDiscount = orders::select('order_type','dis_amount')
+        ->whereNotIn('orderStatus', ['Cancel','Delete'])
+        ->whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->get()->toArray();
+
+        $zomato_d=$online_d=$cash_d=0;
+        $zomato_dost_d=$online_dost_d=$cash_dost_d=0;
+        foreach($orderDiscount as $key=>$val){
+            if($val['order_type']=='Zomato'){
+                $zomato_d++; 
+                $zomato_dost_d +=$val['dis_amount'];
+            }
+            if($val['order_type']=='Cash'){
+                $cash_d++;
+                $cash_dost_d +=$val['dis_amount'];
+            }
+            if($val['order_type']=='Online'){
+                $online_d++;
+                $online_dost_d +=$val['dis_amount'];
+            } 
+        }
+
+        $respose['orderType_d']['Zomato']['totalcost']=$zomato_dost_d;
+        $respose['orderType_d']['Cash']['totalcost']=$cash_dost_d;
+        $respose['orderType_d']['Online']['totalcost']=$online_dost_d;
+
+        $respose['orderType_d']['Zomato']['orderNo']=$zomato_d;
+        $respose['orderType_d']['Online']['orderNo']=$online_d;
+        $respose['orderType_d']['Cash']['orderNo']=$cash_d;
+        // dd($ordercancel);
         //$ordertype = array_count_values($ordertype);    
         //$respose[2'order_types']=$ordertype;
 
