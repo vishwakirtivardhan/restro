@@ -196,6 +196,20 @@ class HomeController extends Controller
           $fromDate=@$res->from;
          $toDate=@$res->to;
         
+         $all_order = orders::whereBetween('created_at', [$fromDate." 00:00:00", $toDate." 23:59:59"])->get()->toArray();
+         // echo '<pre>';print_r($all_order);die;
+         //allorder();
+         
+         foreach($all_order as $key=>$val){
+             // echo $val['id'];die;
+            $orderDeatils = order_list::where('order_id','=',$val['id'])->get()->toArray();
+            $all_order[$key]['order_lists']=$orderDeatils;
+            
+         }
+         // echo '<pre>';  print_r($all_order);die;
+         $respose['all_order']=$all_order;
+         
+
         //$fromDate='2021-07-15';
         //$toDate='2021-07-23';
        // echo gettype($fromDate);die;

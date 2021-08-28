@@ -26,9 +26,14 @@
     <h3>Orders Placed</h3>
     <div class="card-deck mb-3 text-center">
         <?php
+        $totalcost=0;
+        $totalorder=0;
         if(isset($orderType) && !empty($orderType) ){
-        foreach($orderType as $key=>$val){ ?>
-        <div class="card mb-4 box-shadow">
+        foreach($orderType as $key=>$val){ 
+            $totalcost+=$val['totalcost'];
+            $totalorder+=$val['orderNo'];
+            ?>
+        <div class="card mb-3 box-shadow">
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal"><?php echo $key; ?></h4>
             </div>
@@ -39,15 +44,30 @@
             </div>
         </div>
         <?php } } ?>
+        <div class="card mb-3 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Total</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title"><?php echo $totalorder; ?> <small class="text-muted">/
+                        <?php echo $totalcost; ?></small>
+                </h1>
+            </div>
+        </div>
     </div>
 
     <br>
     <h3>Orders Discount</h3>
     <div class="card-deck mb-3 text-center">
         <?php
+        $totalcost_d=0;
+        $totalorder_d=0;
         if(isset($orderType_d) && !empty($orderType_d) ){
-        foreach($orderType_d as $key=>$val){ ?>
-        <div class="card mb-4 box-shadow">
+        foreach($orderType_d as $key=>$val){ 
+            $totalcost_d+=$val['totalcost'];
+            $totalorder_d+=$val['orderNo'];
+            ?>
+        <div class="card mb-3 box-shadow">
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal"><?php echo $key; ?></h4>
             </div>
@@ -58,15 +78,30 @@
             </div>
         </div>
         <?php } } ?>
+        <div class="card mb-3 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Total</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title"><?php echo $totalorder_d; ?> <small class="text-muted">/
+                        <?php echo $totalcost_d; ?></small>
+                </h1>
+            </div>
+        </div>
     </div>
 
     <br>
     <h3>Orders Cancel</h3>
     <div class="card-deck mb-3 text-center">
         <?php
+         $totalcost_c=0;
+         $totalorder_c=0;
         if(isset($orderType_c) && !empty($orderType_c) ){
-        foreach($orderType_c as $key=>$val){ ?>
-        <div class="card mb-4 box-shadow">
+        foreach($orderType_c as $key=>$val){ 
+            $totalcost_c+=$val['totalcost'];
+            $totalorder_c+=$val['orderNo'];
+            ?>
+        <div class="card mb-3 box-shadow">
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal"><?php echo $key; ?></h4>
             </div>
@@ -77,6 +112,16 @@
             </div>
         </div>
         <?php } } ?>
+        <div class="card mb-3 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Total</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title"><?php echo $totalorder_c; ?> <small class="text-muted">/
+                        <?php echo $totalcost_c; ?></small>
+                </h1>
+            </div>
+        </div>
     </div>
 
 
@@ -105,5 +150,42 @@
         </tbody>
     </table>
 
+
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+                <th>Order id</th>
+                <th>Customer Name</th>
+                <th>Customer Phone</th>
+                <th>Total Price</th>
+                <th>Order Type</th>
+                <th>Menu</th>
+                <th> Order Created By</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            
+            foreach($all_order as $key=>$val){ ?>
+            <tr id="{{ $val['id'] }}">
+                <td>{{ $val['id'] }} <br> <b> Token: </b>{{ $val['bill_no'] }}</td>
+                <td>{{ $val['cust_name'] }}</td>
+                <td>{{ $val['cust_phone'] }}</td>
+                <td>{{ $val['total_price'] }}</td>
+                <td>{{ $val['order_type'] }}</td>
+                <td><?php foreach($val['order_lists'] as $key){ echo '<b> Item: </b>'.$key['name'].'<b> Qty:</b>'.$key['quantity'].'<b> T.Cost: </b>'.$key['total_cost'].'<br>'; } ?>
+                </td>
+                <td>{{$val['emp_name']}}</td>
+                <td> <?php echo $val['orderStatus']; ?>
+                </td>
+            </tr>
+            <?php } ?>
+            <!-- <tr>
+            <td>Row 2 Data 1</td>
+            <td>Row 2 Data 2</td>
+        </tr> -->
+        </tbody>
+    </table>
 </div>
 @endsection
