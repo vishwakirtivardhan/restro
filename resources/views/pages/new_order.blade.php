@@ -223,6 +223,10 @@ $("table .add_col").click(function() {
 });
 
 $(document).on('click', '.remove-item', function(e) {
+    let item_name = $(this).attr('item-name');
+    // console.log(listOrder.indexOf(item_name));
+    listOrder.splice(listOrder.indexOf(item_name), 1);
+    console.log(listOrder);
     $(this).parents('tr').remove();
     totalBillCal();
 });
