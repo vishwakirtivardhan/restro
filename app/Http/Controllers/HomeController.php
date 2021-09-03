@@ -86,7 +86,7 @@ class HomeController extends Controller
 
     public function save_order(Request $res){
 
-        dd($res->item_total_price);
+        // dd($res->item_total_price);
        $menu=$respose=[];
        $user = auth()->user();
        $employee = $user->name; 
@@ -140,6 +140,7 @@ class HomeController extends Controller
         $order->dis_amount=$res->dis_amount;
         $order->orderStatus='Active';
         $order->bill_no=$token;
+        $order->order_package=$res->order_package;
         $order->save();
         $respose['order']=$order;
         //echo $order->id;die;

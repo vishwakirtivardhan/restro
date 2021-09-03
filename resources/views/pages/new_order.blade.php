@@ -45,6 +45,15 @@
                     <option value="Zomato">Zomato</option>
                 </select>
             </div>
+            <div class="form-group col-md-3">
+                <label for="formGroupExampleInput">Order Package</label>
+                <select class="form-control " name="order_package" onchange="" required="" id="order_type">
+                    <option value="">Select option</option>
+                    <option value="Dining">Dining</option>
+                    <option value="Parcel">Parcel</option>
+                    <!-- <option value="Zomato">Zomato</option> -->
+                </select>
+            </div>
 
             <div class="form-group col-md-3">
                 <label for="formGroupExampleInput">Discount %</label>
