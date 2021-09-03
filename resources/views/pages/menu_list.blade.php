@@ -4,9 +4,10 @@
 
 <?php //print_r($menuList); ?>
 <div class="container">
+    <br>
+    <h3>Add New Item</h3>
     <form action="menu_save" method="Post" class="row" style="padding: 54px;
     border: 1px solid #00000352;
-    margin-top: 50px;
     box-shadow: 5px 7px 5px #9699967a;
     border-radius: 7px;">
         {{ csrf_field() }}
@@ -47,7 +48,42 @@
 
     </form>
 
-    <br><br>
+    <hr>
+    <h3> Update Status </h3>
+    <form action="category_action" method="Post" class="row" style="padding: 54px;
+    border: 1px solid #00000352;
+    box-shadow: 5px 7px 5px #9699967a;
+    border-radius: 7px;">
+        {{ csrf_field() }}
+        <div class="form-group col-md-4">
+            <label for="formGroupExampleInput">Category</label>
+            <select name='category' class="form-control">
+                <option value="Farali">Farali</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Jain">Jain</option>
+                <option value="Normal">Normal</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="formGroupExampleInput">Action </label>
+            <select name='status' class="form-control">
+                <option value="A">Active</option>
+                <option value="N">Disable</option>
+            </select>
+        </div>
+
+
+
+        <div class="form-group col-md-4">
+            <!-- <label for="formGroupExampleInput">Items Price (Single Item)</label> -->
+            <input type="submit" class="form-control btn btn-primary">
+        </div>
+
+
+    </form>
+
+    <hr>
+    <h3>Item List</h3>
     <table id="table_id" class="display">
         <thead>
             <tr>

@@ -55,7 +55,8 @@
             </div>
         </div>
     </div>
-
+    <br>
+    <hr>
     <br>
     <h3>Orders Discount</h3>
     <div class="card-deck mb-3 text-center">
@@ -89,7 +90,8 @@
             </div>
         </div>
     </div>
-
+    <br>
+    <hr>
     <br>
     <h3>Orders Cancel</h3>
     <div class="card-deck mb-3 text-center">
@@ -124,8 +126,10 @@
         </div>
     </div>
 
-
-
+    <br>
+    <hr>
+    <br>
+    <h3>Item Report</h3>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -149,8 +153,10 @@
             <?php } } ?>
         </tbody>
     </table>
-
-
+    <br>
+    <hr>
+    <br>
+    <h3>Order List</h3>
     <table id="table_id" class="display">
         <thead>
             <tr>
@@ -161,6 +167,7 @@
                 <th>Order Type</th>
                 <th>Menu</th>
                 <th> Order Created By</th>
+                <th> Order Created Date</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -177,8 +184,9 @@
                 <td><?php foreach($val['order_lists'] as $key){ echo '<b> Item: </b>'.$key['name'].'<b> Qty:</b>'.$key['quantity'].'<b> T.Cost: </b>'.$key['total_cost'].'<br>'; } ?>
                 </td>
                 <td>{{$val['emp_name']}}</td>
-                <td> <?php echo $val['orderStatus']; ?>
-                </td>
+                <td> {{$val['created_at']}}</td>
+                <td> {{$val['orderStatus']}}</td>
+
             </tr>
             <?php } ?>
             <!-- <tr>

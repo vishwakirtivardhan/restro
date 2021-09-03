@@ -37,7 +37,8 @@
             </div>
             <div class="form-group col-md-3">
                 <label for="formGroupExampleInput">Order Type</label>
-                <select class="form-control " name="order_type" onselect="fun_ordertype()" required="">
+                <select class="form-control " name="order_type" onchange="fun_ordertype(this)" required=""
+                    id="order_type">
                     <option value="">Select option</option>
                     <option value="Cash">Cash</option>
                     <option value="Online">Online</option>
@@ -144,7 +145,15 @@
 <script>
 function fun_ordertype() {
     alert('checls');
-    console.log($(this).val());
+    let valiie = $('#order_type').val()
+    // console.log(valiie);
+    if (valiie == ' q') {
+        console.log('check');
+        $('.totalpricetotal').removeAttr('readonly');
+    } else {
+        console.log('checkdone');
+        $('.totalpricetotal').attr('readonly', '');
+    }
 }
 // This taking the disable 
 $.fn.serializeIncludeDisabled = function() {
@@ -224,37 +233,44 @@ $('.quantity').select2({
 $('.js-example-basic-single').select2({
     width: '200px',
 });
-
+let listOrder = [];
 $(".add_item_list").click(function() {
     let appendHTML = '';
+
+    listOrder.push();
     $('#order_form').show();
     let itemprice = $('#items_name').find(':selected').val();
     let item_name = $('#items_name').find(':selected').text();
     let quantity = $('.quantity').find(':selected').val();
-    //console.log(quantity);
-    //console.log(itemprice);
-    let totalprice = quantity * itemprice;
-    //console.log(totalprice);
-    appendHTML = '<tr><td><input type="hidden" class="form-control" name="item_name[]" value="' + item_name +
-        '" ><input class="form-control" value="' + item_name +
-        '" disabled><input type="hidden" name="item_price[]" id="itemprice" class="form-control" value="' +
-        itemprice +
-        '" ><input type="hidden" name="item_total_price[]" id="prices" class="form-control totalprice totalpricetotal" value="' +
-        totalprice +
-        '" ></td><td><input class="form-control totalprice" id="prices"   value="' +
-        totalprice +
-        '" disabled></td><td><input type="number" class="form-control" name="item_quantity[]" S_price="' +
-        itemprice +
-        '" onchange="quantityUpdate(this)" value="' + quantity +
-        '" ></td><td><span class="btn btn-warning remove-item" > - </span></td></tr>';
+    if (listOrder.indexOf(item_name) !== -1) {
+        alert('THis is already exits');
+    } else {
+        listOrder.push(item_name);
+        console.log(listOrder);
+        //console.log(itemprice);
+        let totalprice = quantity * itemprice;
+        //console.log(totalprice);
+        appendHTML = '<tr><td><input type="hidden" class="form-control" name="item_name[]" value="' +
+            item_name +
+            '" ><input class="form-control" value="' + item_name +
+            '" disabled><input type="hidden" name="item_price[]" id="itemprice" class="form-control" value="' +
+            itemprice +
+            '" ></td><td><input class="form-control totalprice totalpricetotal" name="item_total_price[]" id="prices" onkeyup="totalBillCal()"  value="' +
+            totalprice +
+            '" readonly></td><td><input type="number" class="form-control" name="item_quantity[]" S_price="' +
+            itemprice +
+            '" onchange="quantityUpdate(this)" value="' + quantity +
+            '" ></td><td><span class="btn btn-warning remove-item" item-name="' + item_name +
+            '" > - </span></td></tr>';
 
-    $('#tableForm tbody').append(appendHTML);
-    totalBillCal();
-    alert('Add to Cart');
-    $(".js-example-basic-single").select2({
-        placeholder: "Select a customer",
-        initSelection: function(element, callback) {}
-    });
+        $('#tableForm tbody').append(appendHTML);
+        totalBillCal();
+        alert('Add to Cart');
+        $(".js-example-basic-single").select2({
+            placeholder: "Select a customer",
+            initSelection: function(element, callback) {}
+        });
+    }
     //alert(totalprice);
 });
 

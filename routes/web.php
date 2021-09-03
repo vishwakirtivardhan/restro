@@ -28,4 +28,5 @@ Route::get('orderStausChange', 'HomeController@orderStatus');
 Route::get('menuStatus', 'HomeController@menuStatus');
 Route::get('report', 'HomeController@customReport');
 Route::get('updatePrice','HomeController@updatePrice');
+Route::post('category_action','HomeController@category_action');
 //Route::post('/print', function() { return view('pages/ajax_popupOpenItem'); });

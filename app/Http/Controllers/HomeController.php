@@ -43,7 +43,7 @@ class HomeController extends Controller
 
     public function menu_save(Request $res)
     {
-    // dd($res->category);
+    // dd($res);
         menu_list::create(['name' => $res->menu_name,'category' =>$res->category,'price' => $res->price,'status' => $res->status]);
         // $menuList=menu_list::all()->toArray();
         return redirect('menu');
@@ -86,7 +86,7 @@ class HomeController extends Controller
 
     public function save_order(Request $res){
 
-
+        dd($res->item_total_price);
        $menu=$respose=[];
        $user = auth()->user();
        $employee = $user->name; 
@@ -348,6 +348,23 @@ class HomeController extends Controller
             return 'Failed';
         }
 
+    }
+
+    function category_action(Request $res){
+
+         $category=$res->category;
+         $status=$res->status;
+     //   menu_list::create(['name' => $res->menu_name,'category' =>$res->category,'price' => $res->price,'status' => $res->status]);
+        // $menuList=menu_list::all()->toArray();
+       
+        $result= menu_list::where('category',$category)->update(['status'=>$res->status]);
+        //echo "<pre>"; print_r($result);
+        //  if($result==1){
+        //      return 'success';
+        //  }else{
+        //      return 'Failed';
+        //  }
+        return redirect('menu');
     }
 }
 
